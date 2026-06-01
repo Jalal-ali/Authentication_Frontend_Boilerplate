@@ -4,51 +4,93 @@ import { Link } from "react-router-dom"
 const Header = () => {
     return (
         <>
-            <header className="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md border border-gray-100 bg-white/80 py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
-                <div className="px-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex shrink-0">
-                            <Link aria-current="page" className="flex items-center" href="/">
-                                <img
-                                    className="h-7 w-auto"
-                                    src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
-                                    alt=""
-                                />
-                                <p className="sr-only">Website Title</p>
-                            </Link>
+            <div className="bg-gray-50 px-4 mx-auto max-w-7xl sm:px-6">
+                <div className="relative pt-6 pb-6 sm:pb-6">
+                    <nav
+                        className="relative flex items-center justify-between sm:h-10 md:justify-center"
+                        aria-label="Global"
+                    >
+                        <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
+                            <div className="flex items-center justify-between w-full md:w-auto">
+                                <Link to="/">
+                                    <span className="sr-only">Company Name</span>
+                                    <img
+                                        className="w-auto h-8 sm:h-10"
+                                        src="https://www.svgrepo.com/show/448244/pack.svg"
+                                        loading="lazy"
+                                        width={202}
+                                        height={40}
+                                    />
+                                </Link>
+                                <div className="flex items-center -mr-2 md:hidden">
+                                    <button
+                                        className="inline-flex items-center justify-center p-2 text-gray-400 bg-gray-50 rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-50"
+                                        type="button"
+                                        aria-expanded="false"
+                                    >
+                                        <span className="sr-only">Open main menu</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={2}
+                                            stroke="currentColor"
+                                            aria-hidden="true"
+                                            className="w-6 h-6"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M4 6h16M4 12h16M4 18h16"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="hidden md:flex md:items-center md:justify-center md:gap-5">
-                            <Link
-                                aria-current="page"
-                                className="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
-                                to="/users"
-                            >
-                                Users
-                            </Link>
-                            <a
-                                className="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
-                                href="#"
-                            >
-                                Pricing
-                            </a>
+                        <div className="hidden md:flex md:space-x-10 list-none">
+                            <li>
+                                <Link
+                                    to="/users"
+                                    className="text-base font-normal text-gray-500 list-none hover:text-gray-900"
+                                    target=""
+                                >
+                                    Users
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="#"
+                                    className="text-base font-normal text-gray-500 list-none hover:text-gray-900"
+                                    target=""
+                                >
+                                    Gallary
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="#"
+                                    className="text-base font-normal text-gray-500 list-none hover:text-gray-900"
+                                    target="_blank"
+                                >
+                                    Blog
+                                </Link>
+                            </li>
                         </div>
-                        <div className="flex items-center justify-end gap-3">
-                            <a
-                                className="hidden items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-150 hover:bg-gray-50 sm:inline-flex"
-                                href="/login"
-                            >
-                                Sign in
-                            </a>
-                            <a
-                                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                                href="/login"
-                            >
-                                Login
-                            </a>
+                        <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
+                            <div className="inline-flex rounded-full shadow">
+                                <Link
+                                    to="/login"
+                                    className="inline-flex items-center px-4 py-2 text-base text-gray-900 bg-white border border-transparent rounded-full cursor-pointer font-base hover:bg-gray-50 "
+                                >
+                                    Sign in
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    </nav>
                 </div>
-            </header>
+            </div>
+
 
         </>
     )

@@ -1,0 +1,86 @@
+import axios from "axios";
+import { useState } from "react";
+
+const Login = () => {
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
+
+    const getVals = () => {
+        console.log("email:", email);
+        console.log("password:", pass);
+
+    }
+    const login = async () => {
+        const res = await axios.post()
+    }
+    return (
+        <>
+            <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
+                <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
+                    {/* Title */}
+                    <h2 className="text-2xl font-bold text-gray-800 text-center">
+                        Welcome Back
+                    </h2>
+                    <p className="text-gray-500 text-center mt-2">Login to your account</p>
+                    {/* Form */}
+                    <form className="mt-6 space-y-4"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            getVals();
+                        }}>
+                        {/* Email */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Email</label>
+                            <input
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
+                                type="email"
+                                placeholder="Enter your email"
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        {/* Password */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Password</label>
+                            <input
+                                onChange={(e) => {
+                                    setPass(e.target.value);
+                                }}
+                                type="password"
+                                placeholder="Enter your password"
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        {/* Login Button */}
+                        <button
+                            type="submit"
+                            className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+                        >
+                            Login
+                        </button>
+                        {/* Divider */}
+                        {/* <div className="flex items-center gap-3 my-4">
+                            <hr className="flex-1 border-gray-300" />
+                            <span className="text-gray-400 text-sm">OR</span>
+                            <hr className="flex-1 border-gray-300" />
+                        </div> */}
+                    </form>
+                    {/* Register Link */}
+                    <p className="text-center text-gray-600 text-sm mt-6">
+                        Don't have an account?
+                        <a
+                            href="register.html"
+                            className="text-green-600 font-semibold hover:underline"
+                        >
+                            Register
+                        </a>
+                    </p>
+                </div>
+            </section>
+        </>
+
+    )
+}
+
+export default Login
