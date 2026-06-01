@@ -1,17 +1,19 @@
+const baseUrl = import.meta.env.VITE_API_URL ;
 import axios from "axios";
 import { useState } from "react";
+import { login } from "../api/authApi";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
-    const getVals = () => {
-        console.log("email:", email);
-        console.log("password:", pass);
-
-    }
-    const login = async () => {
-        const res = await axios.post()
+    // const getVals = () => {
+    //     console.log("email:", email);
+    //     console.log("password:", pass);
+    // }
+    const signIn = async () => {        
+       const res = await login(email, pass);
+        console.log('Server response:', res.data);
     }
     return (
         <>
@@ -26,7 +28,7 @@ const Login = () => {
                     <form className="mt-6 space-y-4"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            getVals();
+                            signIn();
                         }}>
                         {/* Email */}
                         <div>
