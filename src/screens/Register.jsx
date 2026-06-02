@@ -1,43 +1,34 @@
-// const baseUrl = import.meta.env.VITE_API_URL ;
-// import axios from "axios";
 import { useState } from "react";
-import { login } from "../api/authApi";
+import { register } from "../api/authApi";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-
-    // const getVals = () => {
-    //     console.log("email:", email);
-    //     console.log("password:", pass);
-    // }
-    const signIn = async () => {
+    const [role, setRole] = useState("");
+     const signUp = async () => {
         try{
-            const res = await login(email, pass);
-             console.log('Server response:', res.data);
-             alert(res.data.message);
-             console.log('Server status:', res.status);
+            const res = await register(email, pass, role);
+             console.log('Server response:', res.data);            
         }catch(err){
             alert(err);
             console.log(err);
         }
     }
-   
-    return (
-        <>
+  return (
+      <>
             <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
                 <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
                     {/* Title */}
                     <h2 className="text-2xl font-bold text-gray-800 text-center">
-                        Welcome Back
+                        Get Started
                     </h2>
-                    <p className="text-gray-500 text-center mt-2">Login to your account</p>
+                    <p className="text-gray-500 text-center mt-2">Create your account</p>
                     {/* Form */}
                     <form className="mt-6 space-y-4"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            signIn();
+                            signUp();
                         }}>
                         {/* Email */}
                         <div>
@@ -63,12 +54,39 @@ const Login = () => {
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
+                        {/* Role  */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Role</label>
+                            <div className="flex gap-1.5 my-2">
+                            <button type="button" onClick={() => {
+                                setRole("admin");
+                                console.log(role);
+                                
+                                }} className="w-full py-2 border border-transparent font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700">
+                                Admin
+                            </button>
+                            <button type="button" onClick={() => {
+                                setRole("user");
+                                console.log(role);
+                            }} className="w-full border border-transparent font-semibold rounded-lg text-blue-700 bg-blue-100 hover:bg-blue-200">
+                                User
+                            </button>
+                            </div>
+                            {/* <input
+                                onChange={(e) => {
+                                    setRole(e.target.value);
+                                }}
+                                type="password"
+                                placeholder="Enter your role"
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            /> */}
+                        </div>
                         {/* Login Button */}
                         <button
                             type="submit"
                             className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
                         >
-                            Login
+                            Create
                         </button>
                         {/* Divider */}
                         {/* <div className="flex items-center gap-3 my-4">
@@ -79,19 +97,18 @@ const Login = () => {
                     </form>
                     {/* Register Link */}
                     <p className="text-center text-gray-600 text-sm mt-6">
-                        Don't have an account?
+                        Already an account?
                         <Link
-                            to="/register"
+                            to="/login"
                             className="text-green-600 font-semibold hover:underline"
                         >
-                            Register
+                            Login
                         </Link>
                     </p>
                 </div>
             </section>
         </>
-
-    )
+  )
 }
 
-export default Login
+export default Register ;

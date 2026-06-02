@@ -1,11 +1,27 @@
-const baseUrl = import.meta.env.VITE_API_URL ;
+const baseUrl = import.meta.env.VITE_API_URL;
 import axios from "axios";
 
-const login = async (email , password) => {
-     const res = await axios.post(`${baseUrl}/login`, {
-                email, 
-                password 
-            });
-            return res ;
+const login = async (email, password) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const res = await axios.post(`${baseUrl}/login`, {
+            email,
+            password
+        });
+        return res;
+    } catch (err) {
+        throw err.response?.data?.message;
+    }
 }
- export {login};
+// register 
+const register = async (email, password, role) => {
+    try {
+        const res = await axios.post(`${baseUrl}/register`, {
+            email, password, role
+        });
+        return res
+    } catch (err) {
+        throw err.response?.data?.message;
+    }
+}
+export { login, register };
