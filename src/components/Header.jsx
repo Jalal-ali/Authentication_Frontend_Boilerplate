@@ -77,13 +77,21 @@ const Header = () => {
                                 </Link>
                             </li>
                         </div>
-                        <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
+                        <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0 gap-2">
                             <div className="inline-flex rounded-full shadow">
                                 <Link
                                     to="/login"
                                     className="inline-flex items-center px-4 py-2 text-base text-gray-900 bg-white border border-transparent rounded-full cursor-pointer font-base hover:bg-gray-50 "
                                 >
                                     Sign in
+                                </Link>
+                            </div>
+                            <div className="inline-flex rounded-full shadow">
+                                <Link
+                                    to="/register"
+                                    className="inline-flex items-center px-4 py-2 text-base text-white bg-emerald-400 border border-transparent rounded-full cursor-pointer font-base hover:bg-emerald-500 "
+                                >
+                                    Sign up
                                 </Link>
                             </div>
                         </div>
