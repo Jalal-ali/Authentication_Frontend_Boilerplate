@@ -1,5 +1,3 @@
-// const baseUrl = import.meta.env.VITE_API_URL ;
-// import axios from "axios";
 import { useState } from "react";
 import { login } from "../api/authApi";
 import { Link } from "react-router-dom";
@@ -16,6 +14,8 @@ const Login = () => {
         try{
             const res = await login(email, pass);
              console.log('Server response:', res.data);
+             console.log('Token:', res.data.token);
+             localStorage.setItem("token", res.data.token);
              alert(res.data.message);
              console.log('Server status:', res.status);
         }catch(err){
