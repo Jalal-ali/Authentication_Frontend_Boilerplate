@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { register } from "../api/authApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [role, setRole] = useState("");
-     const signUp = async () => {
-        try{
-            const res = await register(email, pass, role);
-             console.log('Server response:', res.data);            
-        }catch(err){
+    const [fullName, setFullName] = useState("");
+    const navigate = useNavigate();
+    const signUp = async () => {
+        try {
+            const res = await register(email, pass, role, fullName);
+            console.log('Server response:', res.data);
+            alert(res.data.message);
+            navigate("/login")
+            
+        } catch (err) {
             alert(err);
             console.log(err);
         }
     }
-  return (
-      <>
+    return (
+        <>
             <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
                 <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
                     {/* Title */}
@@ -30,6 +35,19 @@ const Register = () => {
                             e.preventDefault();
                             signUp();
                         }}>
+                        {/* fullName */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Full Name</label>
+                            <input
+                                onChange={(e) => {
+                                    setFullName(e.target.value);
+                                }}
+                                type="text"
+                                required
+                                placeholder="Enter your full name"
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
                         {/* Email */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">Email</label>
@@ -38,6 +56,7 @@ const Register = () => {
                                     setEmail(e.target.value);
                                 }}
                                 type="email"
+                                required
                                 placeholder="Enter your email"
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
@@ -50,36 +69,39 @@ const Register = () => {
                                     setPass(e.target.value);
                                 }}
                                 type="password"
+                                required
                                 placeholder="Enter your password"
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
                         {/* Role  */}
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">Role</label>
-                            <div className="flex gap-1.5 my-2">
-                            <button type="button" onClick={() => {
-                                setRole("admin");
-                                console.log(role);
-                                
-                                }} className="w-full py-2 border border-transparent font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700">
-                                Admin
-                            </button>
-                            <button type="button" onClick={() => {
-                                setRole("user");
-                                console.log(role);
-                            }} className="w-full border border-transparent font-semibold rounded-lg text-blue-700 bg-blue-100 hover:bg-blue-200">
-                                User
-                            </button>
+                        <div className="w-full mx-auto max-w-2xl">
+                            <h4 className="text-gray-700 font-medium mb-1">Select Your Role</h4>
+
+                            <div className="rounded-lg border py-2 px-4">
+                                <label className="flex bg-gray-100 text-gray-700 rounded-md px-3 py-2 my-3 hover:bg-indigo-300 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="admin"
+                                        checked={role === "admin"}
+                                        onChange={(e) => setRole(e.target.value)}
+                                        required
+                                    />
+                                    <span className="pl-2">Admin</span>
+                                </label>
+
+                                <label className="flex bg-gray-100 text-gray-700 rounded-md px-3 py-2 my-3 hover:bg-indigo-300 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        value="user"
+                                        checked={role === "user"}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    />
+                                    <span className="pl-2">User</span>
+                                </label>
                             </div>
-                            {/* <input
-                                onChange={(e) => {
-                                    setRole(e.target.value);
-                                }}
-                                type="password"
-                                placeholder="Enter your role"
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            /> */}
                         </div>
                         {/* Login Button */}
                         <button
@@ -108,7 +130,7 @@ const Register = () => {
                 </div>
             </section>
         </>
-  )
+    )
 }
 
-export default Register ;
+export default Register;

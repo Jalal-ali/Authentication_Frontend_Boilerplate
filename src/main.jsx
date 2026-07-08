@@ -6,6 +6,7 @@ import Layout from './Layout.jsx'
 import Users from './screens/Users.jsx'
 import Login from './screens/Login.jsx'
 import Register from './screens/Register.jsx'
+import Profile from './screens/Profile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path : "/register",
         element : <Register/>
+      },
+      {
+        path : "/profile",
+        element : <Profile/>
       },
 
 

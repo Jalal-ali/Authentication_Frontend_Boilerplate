@@ -1,7 +1,6 @@
 const baseUrl = import.meta.env.VITE_API_URL;
 import axios from "axios";
 
-
 const login = async (email, password) => {
     // eslint-disable-next-line no-useless-catch
     try {
@@ -15,10 +14,10 @@ const login = async (email, password) => {
     }
 }
 // register 
-const register = async (email, password, role) => {
+const register = async (email, password, role, fullName) => {
     try {
         const res = await axios.post(`${baseUrl}/register`, {
-            email, password, role
+            email, password, role, fullName
         });
         return res
     } catch (err) {
@@ -40,4 +39,18 @@ const fetchUsers = async () => {
         throw err.response?.data?.message;
     }
 }
-export { login, register, fetchUsers };
+// get authenticated user
+const fetchAuthUser = async () => {
+    const token = localStorage.getItem("token");    
+    try{
+        const res = await axios.get(`${baseUrl}/user`, {
+            headers : {
+                Authorization : `bearer ${token}`
+            }
+        });
+        return res
+    }catch(err){
+        throw err.response?.data?.message;
+    }
+}
+export { login, register, fetchUsers, fetchAuthUser };

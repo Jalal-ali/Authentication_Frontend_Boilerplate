@@ -9,10 +9,8 @@ const Users = () => {
     const getUsers = async () => {
       try {
         const res = await fetchUsers();
-        console.log(res.data.users);
         setData(res.data.users);
       } catch (err) {
-        alert(err);
         setError(err);
         console.log(err);
 

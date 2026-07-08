@@ -1,29 +1,33 @@
 import { useState } from "react";
 import { login } from "../api/authApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const navigate = useNavigate();
+
 
     // const getVals = () => {
     //     console.log("email:", email);
     //     console.log("password:", pass);
     // }
     const signIn = async () => {
-        try{
+        try {
             const res = await login(email, pass);
-             console.log('Server response:', res.data);
-             console.log('Token:', res.data.token);
-             localStorage.setItem("token", res.data.token);
-             alert(res.data.message);
-             console.log('Server status:', res.status);
-        }catch(err){
+            console.log('Server response:', res.data);
+            console.log('Token:', res.data.token);
+            localStorage.setItem("token", res.data.token);
+            alert(res.data.message);
+            console.log('Server status:', res.status);
+            navigate("/users")
+
+        } catch (err) {
             alert(err);
             console.log(err);
         }
     }
-   
+
     return (
         <>
             <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
