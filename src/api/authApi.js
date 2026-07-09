@@ -53,4 +53,17 @@ const fetchAuthUser = async () => {
         throw err.response?.data?.message;
     }
 }
-export { login, register, fetchUsers, fetchAuthUser };
+// forgot password 
+const forgotPassword = async (email) => {
+    try{
+        const res = await axios.post(`${baseUrl}/forgot-password`, {
+            email,
+            clientURL: window.location.origin,
+        })
+        return res ;
+    }
+    catch(err){
+       throw err.response?.data?.message;
+    }
+}
+export { login, register, fetchUsers, fetchAuthUser, forgotPassword };

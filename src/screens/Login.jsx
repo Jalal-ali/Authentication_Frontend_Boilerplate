@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { login } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
+import ForgotPassModal from "../components/ForgotPassModal";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const navigate = useNavigate();
+    const [showForgotModal, setShowForgotModal] = useState(false);
 
 
     // const getVals = () => {
@@ -30,7 +32,14 @@ const Login = () => {
 
     return (
         <>
-            <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
+            {showForgotModal && (
+                <ForgotPassModal
+                    showForgotModal={showForgotModal}
+                    setShowForgotModal={setShowForgotModal}
+                />
+            )}
+
+            <section className="max-w-7xl mx-auto min-h-screen h-full px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
                 <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
                     {/* Title */}
                     <h2 className="text-2xl font-bold text-gray-800 text-center">
@@ -67,6 +76,16 @@ const Login = () => {
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
+                        {/* forgot pass  */}
+                        <div className="flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => setShowForgotModal(true)}
+                                className="text-sm text-blue-600 hover:underline cursor-pointer"
+                            >
+                                Forgot Password?
+                            </button>
+                        </div>
                         {/* Login Button */}
                         <button
                             type="submit"
@@ -92,6 +111,7 @@ const Login = () => {
                         </Link>
                     </p>
                 </div>
+                {/* forgot password modal  */}
             </section>
         </>
 

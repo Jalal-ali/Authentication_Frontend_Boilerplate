@@ -22,7 +22,7 @@ const Register = () => {
     }
     return (
         <>
-            <section className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
+            <section className="max-w-7xl min-h-screen h-full mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
                 <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
                     {/* Title */}
                     <h2 className="text-2xl font-bold text-gray-800 text-center">
