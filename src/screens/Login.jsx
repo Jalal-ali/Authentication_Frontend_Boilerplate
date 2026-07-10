@@ -2,10 +2,12 @@ import { useState } from "react";
 import { login } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import ForgotPassModal from "../components/ForgotPassModal";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [showPass, setShowPass] = useState(false);
     const navigate = useNavigate();
     const [showForgotModal, setShowForgotModal] = useState(false);
 
@@ -65,16 +67,22 @@ const Login = () => {
                             />
                         </div>
                         {/* Password */}
-                        <div>
+                        <div className="relative">
                             <label className="block text-gray-700 font-medium mb-1">Password</label>
                             <input
                                 onChange={(e) => {
                                     setPass(e.target.value);
                                 }}
-                                type="password"
+                                type={showPass ? "text" : "password"}
                                 placeholder="Enter your password"
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                            <button
+                            type="button"
+                            onClick={()=>setShowPass(prev => !prev)}
+                            className="absolute right-3 top-12 -translate-y-1/2">
+                                {showPass ? <EyeOff color="#4A4A4A" size={20}/> : <Eye color="#4A4A4A" size={20}/>}
+                            </button>
                         </div>
                         {/* forgot pass  */}
                         <div className="flex justify-end">
@@ -111,7 +119,6 @@ const Login = () => {
                         </Link>
                     </p>
                 </div>
-                {/* forgot password modal  */}
             </section>
         </>
 

@@ -7,6 +7,7 @@ import Users from './screens/Users.jsx'
 import Login from './screens/Login.jsx'
 import Register from './screens/Register.jsx'
 import Profile from './screens/Profile.jsx'
+import ResetPassword from './screens/ResetPassword.jsx'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path : "/profile",
         element : <Profile/>
+      },
+      {
+        path : "/reset-password/:token",
+        element : <ResetPassword/>
       },
 
 

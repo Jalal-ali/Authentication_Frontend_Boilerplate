@@ -66,4 +66,16 @@ const forgotPassword = async (email) => {
        throw err.response?.data?.message;
     }
 }
-export { login, register, fetchUsers, fetchAuthUser, forgotPassword };
+const resetPassword = async (token, password) => {
+    try{
+        const res = await axios.post(`${baseUrl}/reset-password`, {
+            token,
+            password
+        })
+        return res ;
+    }
+    catch(err){
+       throw err.response?.data?.message;
+    }
+}
+export { login, register, fetchUsers, fetchAuthUser, forgotPassword, resetPassword };

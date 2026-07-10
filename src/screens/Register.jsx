@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { register } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [role, setRole] = useState("");
     const [fullName, setFullName] = useState("");
+        const [showPass, setShowPass] = useState(false);
     const navigate = useNavigate();
     const signUp = async () => {
         try {
@@ -14,7 +16,7 @@ const Register = () => {
             console.log('Server response:', res.data);
             alert(res.data.message);
             navigate("/login")
-            
+
         } catch (err) {
             alert(err);
             console.log(err);
@@ -62,17 +64,23 @@ const Register = () => {
                             />
                         </div>
                         {/* Password */}
-                        <div>
+                        <div className="relative">
                             <label className="block text-gray-700 font-medium mb-1">Password</label>
                             <input
                                 onChange={(e) => {
                                     setPass(e.target.value);
                                 }}
-                                type="password"
+                                type={showPass ? "text" : "password"}
                                 required
                                 placeholder="Enter your password"
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPass(prev => !prev)}
+                                className="absolute right-3 top-12 -translate-y-1/2">
+                                {showPass ? <EyeOff color="#4A4A4A" size={20} /> : <Eye color="#4A4A4A" size={20} />}
+                            </button>
                         </div>
                         {/* Role  */}
                         <div className="w-full mx-auto max-w-2xl">
