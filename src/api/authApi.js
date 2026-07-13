@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_LOCAL_URL || import.meta.env.VITE_API_HOST_URL ;
 import axios from "axios";
 
 const login = async (email, password) => {
@@ -27,55 +27,75 @@ const register = async (email, password, role, fullName) => {
 
 // get all users  
 const fetchUsers = async () => {
-    const token = localStorage.getItem("token");    
-    try{
+    const token = localStorage.getItem("token");
+    try {
         const res = await axios.get(`${baseUrl}/users`, {
-            headers : {
-                Authorization : `bearer ${token}`
+            headers: {
+                Authorization: `bearer ${token}`
             }
         });
         return res
-    }catch(err){
+    } catch (err) {
         throw err.response?.data?.message;
     }
 }
 // get authenticated user
 const fetchAuthUser = async () => {
-    const token = localStorage.getItem("token");    
-    try{
+    const token = localStorage.getItem("token");
+    try {
         const res = await axios.get(`${baseUrl}/user`, {
-            headers : {
-                Authorization : `bearer ${token}`
+            headers: {
+                Authorization: `bearer ${token}`
             }
         });
         return res
-    }catch(err){
+    } catch (err) {
+        throw err.response?.data?.message;
+    }
+}
+// change user password 
+const changePassword = async (newPassword, currentPass) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    try {
+        const res = await axios.put(`${baseUrl}/update-password`, {
+               newPassword, currentPass
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return res
+    } catch (err) {
         throw err.response?.data?.message;
     }
 }
 // forgot password 
 const forgotPassword = async (email) => {
-    try{
+    try {
         const res = await axios.post(`${baseUrl}/forgot-password`, {
             email,
             clientURL: window.location.origin,
         })
-        return res ;
+        return res;
     }
-    catch(err){
-       throw err.response?.data?.message;
+    catch (err) {
+        throw err.response?.data?.message;
     }
 }
 const resetPassword = async (token, password) => {
-    try{
+    try {
         const res = await axios.post(`${baseUrl}/reset-password`, {
             token,
             password
         })
-        return res ;
+        return res;
     }
-    catch(err){
-       throw err.response?.data?.message;
+    catch (err) {
+        throw err.response?.data?.message;
     }
 }
-export { login, register, fetchUsers, fetchAuthUser, forgotPassword, resetPassword };
+export { login, register, fetchUsers, fetchAuthUser, forgotPassword, resetPassword, changePassword };

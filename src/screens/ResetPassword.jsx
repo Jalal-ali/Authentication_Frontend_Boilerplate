@@ -13,7 +13,7 @@ const ResetPassword = () => {
 
   const handleReset = async () => {
     
-    if (password !== confirmPass) {
+    if(password !== confirmPass) {
       alert("Confirm password does not match.");
       return;
     }
@@ -32,6 +32,7 @@ const ResetPassword = () => {
   return (
     <>
       {success ? (
+         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
         <div className="text-center py-6 bg-emerald-100 px-4 rounded-lg mx-4">
           <svg viewBox="0 0 24 24" className="justify-self-center rotate-10 text-green-600 w-8 h-8 sm:w-8 sm:h-8 mr-3 text-center">
             <path fill="currentColor"
@@ -53,6 +54,7 @@ const ResetPassword = () => {
             Login
           </button>
         </div>
+         </div>
       ) : (
         <section className="max-w-7xl mx-auto min-h-screen h-full px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
           <div className="bg-white mx-auto shadow-lg rounded-2xl p-8 w-full max-w-md">
