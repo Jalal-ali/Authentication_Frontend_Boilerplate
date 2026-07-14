@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import { forgotPassword } from '../api/authApi';
 
 const ForgotPassModal = ({ showForgotModal, setShowForgotModal }) => {

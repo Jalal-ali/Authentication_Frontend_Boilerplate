@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { login } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import ForgotPassModal from "../components/ForgotPassModal";
 import { Eye, EyeOff } from "lucide-react";
+import AuthContext from "../context/AuthContext.js";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -10,18 +12,15 @@ const Login = () => {
     const [showPass, setShowPass] = useState(false);
     const navigate = useNavigate();
     const [showForgotModal, setShowForgotModal] = useState(false);
+    const auth = useContext(AuthContext);
 
-
-    // const getVals = () => {
-    //     console.log("email:", email);
-    //     console.log("password:", pass);
-    // }
     const signIn = async () => {
         try {
             const res = await login(email, pass);
             console.log('Server response:', res.data);
-            console.log('Token:', res.data.token);
-            localStorage.setItem("token", res.data.token);
+            // console.log('Token:', res.data.token);
+            // localStorage.setItem("token", res.data.token);
+            auth.login(res.data.token, res.data.user);
             alert(res.data.message);
             console.log('Server status:', res.status);
             navigate("/users")
@@ -78,10 +77,10 @@ const Login = () => {
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <button
-                            type="button"
-                            onClick={()=>setShowPass(prev => !prev)}
-                            className="absolute right-3 top-12 -translate-y-1/2">
-                                {showPass ? <EyeOff color="#4A4A4A" size={20}/> : <Eye color="#4A4A4A" size={20}/>}
+                                type="button"
+                                onClick={() => setShowPass(prev => !prev)}
+                                className="absolute right-3 top-12 -translate-y-1/2">
+                                {showPass ? <EyeOff color="#4A4A4A" size={20} /> : <Eye color="#4A4A4A" size={20} />}
                             </button>
                         </div>
                         {/* forgot pass  */}

@@ -8,6 +8,7 @@ import Login from './screens/Login.jsx'
 import Register from './screens/Register.jsx'
 import Profile from './screens/Profile.jsx'
 import ResetPassword from './screens/ResetPassword.jsx'
+import AuthProvider from './context/AuthState.jsx'
 
 const router = createBrowserRouter([
   {
@@ -44,5 +45,7 @@ const router = createBrowserRouter([
   }
 ])
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
 )

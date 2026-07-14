@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
+import {useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchAuthUser } from "../api/authApi";
+import AuthContext from "../context/AuthContext.js";
+
 
 const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  // const token = 
-  useEffect(() => {
-    if (token) {
-      const loadUser = async () => {
-        const res = await fetchAuthUser();
-        console.log(res.data.user);
-        setUser(res.data.user);
-      }
-      loadUser();
-    }
-  }, [token]);
-  const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
+  const {token, logout, user} = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logout();
     alert("Logged Out!")
     navigate("/login");
-
   }
 
 
@@ -74,7 +62,7 @@ const Header = () => {
         </ul>
 
         {/* Desktop Buttons */}
-        {user ? (
+        {token ? (
           <div className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
     <svg
@@ -103,7 +91,7 @@ const Header = () => {
   </div>
 
   <button
-    onClick={logout}
+    onClick={handleLogout}
     className="cursor-pointer rounded-full p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600"
     title="Logout"
   >

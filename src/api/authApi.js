@@ -26,8 +26,8 @@ const register = async (email, password, role, fullName) => {
 }
 
 // get all users  
-const fetchUsers = async () => {
-    const token = localStorage.getItem("token");
+const fetchUsers = async (token) => {
+    // const token = localStorage.getItem("token");
     try {
         const res = await axios.get(`${baseUrl}/users`, {
             headers: {

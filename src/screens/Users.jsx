@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import { fetchUsers } from "../api/authApi"
+import AuthContext from "../context/AuthContext.js";
 
 const Users = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+    const auth = useContext(AuthContext);
+  
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await fetchUsers();
+        const token = auth.token ;
+        const res = await fetchUsers(token);
         setData(res.data.users);
       } catch (err) {
         setError(err);
@@ -17,10 +21,7 @@ const Users = () => {
       }
     }
     getUsers();
-  }, [])
-  useEffect(() => {
-    console.log("Data changed:", data);
-  }, [data]);
+  }, []);
   return (
     <>
       {error ?

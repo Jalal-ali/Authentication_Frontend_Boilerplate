@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { changePassword, fetchAuthUser } from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-
 const Profile = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({});
@@ -12,7 +11,6 @@ const Profile = () => {
   const [showPass, setShowPass] = useState(false);
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
-
 
 
   useEffect(() => {
