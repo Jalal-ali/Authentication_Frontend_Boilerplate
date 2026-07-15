@@ -1,4 +1,4 @@
-import {useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext.js";
 
@@ -6,7 +6,7 @@ import AuthContext from "../context/AuthContext.js";
 const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const {token, logout, user} = useContext(AuthContext);
+  const { token, logout, user } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
@@ -50,72 +50,63 @@ const Header = () => {
               Profile
             </Link>
           </li>
-
-          <li>
-            <Link
-              to="/blog"
-              className="font-medium text-gray-600 transition hover:text-indigo-600"
-            >
-              Blog
-            </Link>
-          </li>
         </ul>
 
         {/* Desktop Buttons */}
         {token ? (
-          <div className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
-  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 text-gray-600"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
-      />
-    </svg>
-  </div>
+          <div className="hidden md:flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                />
+              </svg>
+            </div>
 
-  <div className="hidden sm:block">
-    <p className="text-sm font-semibold text-gray-800">
-      {user?.fullName || "User"}
-    </p>
-    <p className="text-xs text-gray-500">
-      {user?.email}
-    </p>
-  </div>
+            <div className="hidden sm:block">
+              <p className="text-sm font-semibold text-gray-800">
+                {user?.fullName || "User"}
+              </p>
+              <p className="text-xs text-gray-500">
+                {user?.email}
+              </p>
+            </div>
 
-  <button
-    onClick={handleLogout}
-    className="cursor-pointer rounded-full p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600"
-    title="Logout"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M22 12H14m5-3 3 3-3 3"
-      />
-    </svg>
-  </button>
-</div>) : (
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer rounded-full p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600"
+              title="Logout"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M22 12H14m5-3 3 3-3 3"
+                />
+              </svg>
+            </button>
+          </div>) : (
           <div className="hidden items-center gap-3 md:flex">
             <Link
               to="/login"
@@ -193,31 +184,90 @@ const Header = () => {
             Profile
           </Link>
 
-          <Link
-            to="/blog"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-4 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
-          >
-            Blog
-          </Link>
-
           <hr className="my-3" />
+          {token ? (
+            <div className="flex w-full max-w-md items-center justify-between rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
 
-          <Link
-            to="/login"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg border px-4 py-3 text-center font-medium transition hover:bg-gray-100"
-          >
-            Sign In
-          </Link>
+              {/* Left Section */}
+              <div className="flex min-w-0 items-center gap-3">
+                {/* Avatar */}
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-indigo-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                    />
+                  </svg>
+                </div>
 
-          <Link
-            to="/register"
-            onClick={() => setOpen(false)}
-            className="mt-3 block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white transition hover:bg-indigo-700"
-          >
-            Sign Up
-          </Link>
+                {/* User Info */}
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-gray-800">
+                    {user?.fullName || "User"}
+                  </p>
+
+                  <p className="truncate text-xs text-gray-500">
+                    {user?.email}
+                  </p>
+                </div>
+              </div>
+
+              {/* Logout */}
+              <button
+                onClick={handleLogout}
+                title="Logout"
+                className="ml-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-red-500 transition hover:bg-red-50 hover:text-red-600"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M22 12H14m5-3 3 3-3 3"
+                  />
+                </svg>
+              </button>
+
+            </div>
+          ) : (
+            <div>
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="block rounded-lg border px-4 py-3 text-center font-medium transition hover:bg-gray-100"
+              >
+                Sign In
+              </Link>
+
+              <Link
+                to="/register"
+                onClick={() => setOpen(false)}
+                className="mt-3 block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white transition hover:bg-indigo-700"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
+
         </div>
       </div>
     </header>

@@ -40,8 +40,8 @@ const fetchUsers = async (token) => {
     }
 }
 // get authenticated user
-const fetchAuthUser = async () => {
-    const token = localStorage.getItem("token");
+const fetchAuthUser = async (token) => {
+    // const token = localStorage.getItem("token");
     try {
         const res = await axios.get(`${baseUrl}/user`, {
             headers: {

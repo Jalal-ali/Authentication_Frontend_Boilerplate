@@ -1,28 +1,19 @@
-import { useEffect, useState } from "react"
-import { changePassword, fetchAuthUser } from "../api/authApi";
+import { useContext, useState } from "react"
+import { changePassword } from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import AuthContext from '../context/AuthContext.js'
 const Profile = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({});
   const [passModal, setPassModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
+  const {token, user, userLoading} = useContext(AuthContext);
 
-
-  useEffect(() => {
-    const loadUser = async () => {
-      const res = await fetchAuthUser();
-      console.log("Response:", res.data.user);
-      setData(res.data.user);
-
-    };
-    loadUser();
-  }, []);
-
+  // change pass handling 
   const handleSubmit = async () => {
     try{
       const res = await changePassword(newPass,currentPass);
@@ -36,43 +27,12 @@ const Profile = () => {
     }
     finally{
       setLoading(false);
-    }
-    
+    }    
   }
 
   return (
     <>
-     {success && (
-         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        <div className="text-center py-6 bg-emerald-100 px-4 rounded-lg mx-4">
-          <svg viewBox="0 0 24 24" className="justify-self-center rotate-10 text-green-600 w-8 h-8 sm:w-8 sm:h-8 mr-3 text-center">
-            <path fill="currentColor"
-              d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
-            </path>
-          </svg>
-          <h2 className="text-2xl font-bold text-green-600">
-            Password Reset Successfully.
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            Click Login button to login again with your new password or <br /> Close to stay logged in.
-          </p>
-
-          <button
-            onClick={() => setSuccess(false)}
-            className="cursor-pointer mt-6 w-full bg-gray-500 hover:bg-gray-700 text-white py-2 rounded-lg"
-          >
-            Close
-          </button>
-          <button
-            onClick={() => navigate("/login")}
-            className="cursor-pointer mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
-          >
-            Login Again
-          </button>
-        </div>
-         </div>
-      ) }
+      {/* -----------change password modal start -------------------  */}
       {passModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md relative">
@@ -186,6 +146,46 @@ const Profile = () => {
           </div>
         </div>
       )}
+      {/* -----------change password modal end -------------------  */}
+
+      {/* ----------- success modal start -------------------  */}
+      {success && (
+         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="text-center py-6 bg-emerald-100 px-4 rounded-lg mx-4">
+          <svg viewBox="0 0 24 24" className="justify-self-center rotate-10 text-green-600 w-8 h-8 sm:w-8 sm:h-8 mr-3 text-center">
+            <path fill="currentColor"
+              d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+            </path>
+          </svg>
+          <h2 className="text-2xl font-bold text-green-600">
+            Password Reset Successfully.
+          </h2>
+
+          <p className="text-gray-600 mt-2">
+            Click Login button to login again with your new password or <br /> Close to stay logged in.
+          </p>
+
+          <button
+            onClick={() => setSuccess(false)}
+            className="cursor-pointer mt-6 w-full bg-gray-500 hover:bg-gray-700 text-white py-2 rounded-lg"
+          >
+            Close
+          </button>
+          <button
+            onClick={() => navigate("/login")}
+            className="cursor-pointer mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
+          >
+            Login Again
+          </button>
+        </div>
+         </div>
+      ) }
+      {/* ----------- success modal start -------------------  */}
+
+
+      {/* ----------- Profile section start -------------------  */}
+
+          {token ? (
       <div className="bg-white overflow-hidden  px-2">
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -193,33 +193,35 @@ const Profile = () => {
           </h3>
         </div>
         <div className="border-2 border-slate-300 px-4 py-5 sm:p-0 rounded-lg">
-          <dl className="sm:divide-y sm:divide-gray-200">
+            <dl className="sm:divide-y sm:divide-gray-200">
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Full name</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {data.fullName}
+                {userLoading ? "Loading" : user.fullName  }
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Email address</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {data.email}
+                {userLoading ? "Loading" : user.email  }
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">ID</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {data._id}
+                {/* {user._id} */}
+                {userLoading ? "Loading" : user._id  }
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Role</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {data.role}
+                {/* {user.role} */}
+                {userLoading ? "Loading" : user.role  }
               </dd>
             </div>
           </dl>
-        </div>
+           </div>
         <button
           type="button"
           onClick={() => setPassModal(prev => !prev)}
@@ -227,6 +229,15 @@ const Profile = () => {
           Change Password
         </button>
       </div>
+          ) : (
+            <div className="flex py-4 text-center justify-center">
+          <h1>Unauthorized</h1>
+        </div>
+          )}
+          
+       
+      {/* ----------- Profile section end -------------------  */}
+
 
     </>
   )

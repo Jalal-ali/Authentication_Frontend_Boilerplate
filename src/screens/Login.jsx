@@ -20,7 +20,7 @@ const Login = () => {
             console.log('Server response:', res.data);
             // console.log('Token:', res.data.token);
             // localStorage.setItem("token", res.data.token);
-            auth.login(res.data.token, res.data.user);
+            auth.login(res.data.token);
             alert(res.data.message);
             console.log('Server status:', res.status);
             navigate("/users")
