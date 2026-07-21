@@ -11,7 +11,7 @@ const Profile = () => {
   const [showPass, setShowPass] = useState(false);
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
-  const {token, user, userLoading} = useContext(AuthContext);
+  const {token, user, userLoading, logout} = useContext(AuthContext);
 
   // change pass handling 
   const handleSubmit = async () => {
@@ -172,7 +172,9 @@ const Profile = () => {
             Close
           </button>
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => {
+              logout();
+              navigate("/login")}}
             className="cursor-pointer mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
           >
             Login Again

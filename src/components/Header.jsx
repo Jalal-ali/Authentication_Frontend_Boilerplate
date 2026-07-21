@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Shield from '../assets/shield.png'
 import AuthContext from "../context/AuthContext.js";
 
 
@@ -22,12 +23,12 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img
-            src="https://www.svgrepo.com/show/448244/pack.svg"
+            src={Shield}
             alt="Logo"
-            className="h-10 w-10"
+            className="h-11 w-11"
           />
           <span className="text-xl font-bold text-gray-800">
-            AuthApp
+            Auth Application
           </span>
         </Link>
 

@@ -37,11 +37,11 @@ const Users = () => {
           User
         </th>
 
-        <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">
+        <th className="px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider">
           Role
         </th>
 
-        <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">
+        <th className="px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider">
           Email
         </th>
 
@@ -57,20 +57,20 @@ const Users = () => {
           key={value._id}
           className="hover:bg-indigo-50 transition-colors duration-200 even:bg-gray-50"
         >
-          <td className="px-6 py-4 whitespace-nowrap">
+          <td className="px-6 py-4 whitespace-nowrap ">
             <div>
               <p className="font-semibold text-gray-800">{value.fullName}</p>
               <p className="text-sm text-gray-500">{value._id}</p>
             </div>
           </td>
 
-          <td className="px-6 py-4 whitespace-nowrap">
+          <td className="px-6 py-4 whitespace-nowrap text-center">
             <span className={`px-3 py-1 text-xs font-semibold rounded-full + ${value.role == "admin" ? `bg-green-100 text-green-700` : `bg-gray-200 text-gray-700` }`}>
               {value.role}
             </span>
           </td>
 
-          <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+          <td className="px-6 py-4 whitespace-nowrap text-gray-600 text-center">
             {value.email}
           </td>
 

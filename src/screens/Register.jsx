@@ -8,10 +8,14 @@ const Register = () => {
     const [pass, setPass] = useState("");
     const [role, setRole] = useState("");
     const [fullName, setFullName] = useState("");
-        const [showPass, setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(false);
     const navigate = useNavigate();
     const signUp = async () => {
         try {
+            if(!fullName){
+                alert("Please Enter valid Full Name !");
+                return;
+            }
             const res = await register(email, pass, role, fullName);
             console.log('Server response:', res.data);
             alert(res.data.message);
@@ -42,7 +46,7 @@ const Register = () => {
                             <label className="block text-gray-700 font-medium mb-1">Full Name</label>
                             <input
                                 onChange={(e) => {
-                                    setFullName(e.target.value);
+                                    setFullName(e.target.value.trim());
                                 }}
                                 type="text"
                                 required

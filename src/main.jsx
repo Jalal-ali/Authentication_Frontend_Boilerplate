@@ -9,35 +9,45 @@ import Register from './screens/Register.jsx'
 import Profile from './screens/Profile.jsx'
 import ResetPassword from './screens/ResetPassword.jsx'
 import AuthProvider from './context/AuthState.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
-    path : "/",
-    element : <Layout/>,
-    children : [
+    path: "/",
+    element: <Layout />,
+    children: [
       {
-        path : "/",
-        element : <App/>
+        path: "/",
+        element: <App />
       },
       {
-        path : "/users",
-        element : <Users/>
+        path: "/users",
+        element: <Users />
       },
       {
-        path : "/login",
-        element : <Login/>
+        path: "/login",
+        element: <Login />
       },
       {
-        path : "/register",
-        element : <Register/>
+        path: "/register",
+        element: <Register />
       },
       {
-        path : "/profile",
-        element : <Profile/>
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/profile",
+            element: <Profile />
+          },
+        ]
       },
+      // {
+      //   path : "/profile",
+      //   element : <Profile/>
+      // },
       {
-        path : "/reset-password/:token",
-        element : <ResetPassword/>
+        path: "/reset-password/:token",
+        element: <ResetPassword />
       },
 
 
