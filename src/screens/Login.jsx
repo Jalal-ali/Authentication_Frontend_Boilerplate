@@ -22,7 +22,6 @@ const Login = () => {
             // localStorage.setItem("token", res.data.token);
             auth.login(res.data.token);
             alert(res.data.message);
-            console.log('Server status:', res.status);
             navigate("/users")
 
         } catch (err) {

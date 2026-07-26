@@ -21,10 +21,6 @@ const router = createBrowserRouter([
         element: <App />
       },
       {
-        path: "/users",
-        element: <Users />
-      },
-      {
         path: "/login",
         element: <Login />
       },
@@ -38,6 +34,10 @@ const router = createBrowserRouter([
           {
             path: "/profile",
             element: <Profile />
+          },
+          {
+            path: "/users",
+            element: <Users />
           },
         ]
       },

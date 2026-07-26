@@ -54,7 +54,7 @@ const Header = () => {
         </ul>
 
         {/* Desktop Buttons */}
-        {token ? (
+        {user ? (
           <div className="hidden md:flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
               <svg

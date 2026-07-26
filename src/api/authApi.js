@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_API_LOCAL_URL || import.meta.env.VITE_API_HOST_URL ;
+const baseUrl = import.meta.env.VITE_API_LOCAL_URL || import.meta.env.VITE_API_HOST_URL;
 import axios from "axios";
 
 const login = async (email, password) => {
@@ -7,6 +7,8 @@ const login = async (email, password) => {
         const res = await axios.post(`${baseUrl}/login`, {
             email,
             password
+        }, {
+            withCredentials: true,
         });
         return res;
     } catch (err) {
@@ -56,12 +58,10 @@ const fetchAuthUser = async (token) => {
 // change user password 
 const changePassword = async (newPassword, currentPass) => {
     const token = localStorage.getItem("token");
-    console.log(token);
-
     try {
         const res = await axios.put(`${baseUrl}/update-password`, {
-               newPassword, currentPass
-            },
+            newPassword, currentPass
+        },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

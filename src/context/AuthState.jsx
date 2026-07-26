@@ -6,22 +6,26 @@ const AuthState = (props) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-  
+
   useEffect(() => {
     const loadUser = async () => {
-      if(!token){
+      if (!token) {
         setUserLoading(false);
         return
       }
-      try{
+      try {
         setUserLoading(true);
         const res = await fetchAuthUser(token);
         console.log("Fetched user:", res.data.user);
         setUser(res.data.user);
-      }catch(err){
-        alert("Error:", err.response?.data?.message);
+      } catch (err) {
+        console.log(err);
+        alert("Your session has been expired, Login Again.");
+        localStorage.removeItem("token");
+        setToken(null);
+        setUser(null);
       }
-      finally{
+      finally {
         setUserLoading(false);
       }
     }
