@@ -37,7 +37,7 @@ const fetchUsers = async (token) => {
             }
         });
         return res
-    } catch (err) {
+    } catch (err) {        
         throw err.response?.data?.message;
     }
 }

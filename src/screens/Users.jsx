@@ -16,7 +16,7 @@ const Users = () => {
         setData(res.data.users);
       } catch (err) {
         setError(err);
-        console.log(err);
+        // console.log(err);
 
       }
     }
@@ -26,7 +26,7 @@ const Users = () => {
     <>
       {error ?
         <div className="flex py-4 text-center justify-center">
-          <h1>{error + ", Login Again."}</h1>
+          <h1>{error}</h1>
         </div>
         : (
           <div className="w-full overflow-x-auto rounded-xl border border-gray-200 shadow-md">

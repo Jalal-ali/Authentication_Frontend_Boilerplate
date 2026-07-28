@@ -19,7 +19,7 @@ const AuthState = (props) => {
         console.log("Fetched user:", res.data.user);
         setUser(res.data.user);
       } catch (err) {
-        console.log(err);
+        console.log("Error:", err);
         alert("Your session has been expired, Login Again.");
         localStorage.removeItem("token");
         setToken(null);
