@@ -15,7 +15,7 @@ const AuthState = (props) => {
       }
       try {
         setUserLoading(true);
-        const res = await fetchAuthUser(token);
+        const res = await fetchAuthUser();
         console.log("Fetched user:", res.data.user);
         setUser(res.data.user);
       } catch (err) {

@@ -1,20 +1,33 @@
 const baseUrl = import.meta.env.VITE_API_LOCAL_URL || import.meta.env.VITE_API_HOST_URL;
 import axios from "axios";
+import { api } from "./axiosInstance";
 
 const login = async (email, password) => {
-    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await axios.post(`${baseUrl}/login`, {
-            email,
-            password
-        }, {
-            withCredentials: true,
+        const res = await api.post("/login", {
+            email, password
         });
-        return res;
+        return res
     } catch (err) {
+        // alert(err);
         throw err.response?.data?.message;
     }
 }
+
+// const login = async (email, password) => {
+//     try {
+//         const res = await axios.post(`${baseUrl}/login`, {
+//             email,
+//             password
+//         }, {
+//             withCredentials: true,
+//         });
+//         return res;
+//     } catch (err) {
+//         throw err.response?.data?.message;
+//     }
+// }
+
 // register 
 const register = async (email, password, role, fullName) => {
     try {
@@ -28,33 +41,52 @@ const register = async (email, password, role, fullName) => {
 }
 
 // get all users  
-const fetchUsers = async (token) => {
-    // const token = localStorage.getItem("token");
+const fetchUsers = async () => {
     try {
-        const res = await axios.get(`${baseUrl}/users`, {
-            headers: {
-                Authorization: `bearer ${token}`
-            }
-        });
-        return res
-    } catch (err) {        
-        throw err.response?.data?.message;
-    }
-}
-// get authenticated user
-const fetchAuthUser = async (token) => {
-    // const token = localStorage.getItem("token");
-    try {
-        const res = await axios.get(`${baseUrl}/user`, {
-            headers: {
-                Authorization: `bearer ${token}`
-            }
-        });
+        const res = await api.get("/users");
         return res
     } catch (err) {
+        alert(err);
         throw err.response?.data?.message;
     }
 }
+// const fetchUsers = async (token) => {
+//     // const token = localStorage.getItem("token");
+//     try {
+//         const res = await axios.get(`${baseUrl}/users`, {
+//             headers: {
+//                 Authorization: `bearer ${token}`
+//             }
+//         });
+//         return res
+//     } catch (err) {
+//         throw err.response?.data?.message;
+//     }
+// }
+
+// get authenticated user
+const fetchAuthUser = async () => {
+    try {
+        const res = await api.get("/user");
+        return res
+    } catch (err) {
+        alert(err);
+        throw err.response?.data?.message;
+    }
+}
+// const fetchAuthUser = async (token) => {
+//     // const token = localStorage.getItem("token");
+//     try {
+//         const res = await axios.get(`${baseUrl}/user`, {
+//             headers: {
+//                 Authorization: `bearer ${token}`
+//             }
+//         });
+//         return res
+//     } catch (err) {
+//         throw err.response?.data?.message;
+//     }
+// }
 // change user password 
 const changePassword = async (newPassword, currentPass) => {
     const token = localStorage.getItem("token");

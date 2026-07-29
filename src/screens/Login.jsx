@@ -18,7 +18,7 @@ const Login = () => {
         try {
             const res = await login(email, pass);
             console.log('Server response:', res.data);
-            // console.log('Token:', res.data.token);
+            console.log('Token:', res.data.token);
             // localStorage.setItem("token", res.data.token);
             auth.login(res.data.token);
             alert(res.data.message);
