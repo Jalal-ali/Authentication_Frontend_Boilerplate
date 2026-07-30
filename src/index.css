@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@theme {
+  --animate-blur-pulse: blurPulse 3s ease-in-out infinite;
+
+  @keyframes blurPulse {
+    0%, 100% { filter: blur(4px); }
+    50% { filter: blur(10px); }
+  }
+}

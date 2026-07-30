@@ -1,7 +1,6 @@
-const baseUrl = import.meta.env.VITE_API_LOCAL_URL || import.meta.env.VITE_API_HOST_URL;
-import axios from "axios";
 import { api } from "./axiosInstance";
 
+// login 
 const login = async (email, password) => {
     try {
         const res = await api.post("/login", {
@@ -14,28 +13,13 @@ const login = async (email, password) => {
     }
 }
 
-// const login = async (email, password) => {
-//     try {
-//         const res = await axios.post(`${baseUrl}/login`, {
-//             email,
-//             password
-//         }, {
-//             withCredentials: true,
-//         });
-//         return res;
-//     } catch (err) {
-//         throw err.response?.data?.message;
-//     }
-// }
-
 // register 
 const register = async (email, password, role, fullName) => {
     try {
-        const res = await axios.post(`${baseUrl}/register`, {
-            email, password, role, fullName
-        });
+        const res = await api.post("/register", {email, password, role, fullName} );
         return res
     } catch (err) {
+        alert(err);
         throw err.response?.data?.message;
     }
 }
@@ -50,19 +34,6 @@ const fetchUsers = async () => {
         throw err.response?.data?.message;
     }
 }
-// const fetchUsers = async (token) => {
-//     // const token = localStorage.getItem("token");
-//     try {
-//         const res = await axios.get(`${baseUrl}/users`, {
-//             headers: {
-//                 Authorization: `bearer ${token}`
-//             }
-//         });
-//         return res
-//     } catch (err) {
-//         throw err.response?.data?.message;
-//     }
-// }
 
 // get authenticated user
 const fetchAuthUser = async () => {
@@ -74,60 +45,39 @@ const fetchAuthUser = async () => {
         throw err.response?.data?.message;
     }
 }
-// const fetchAuthUser = async (token) => {
-//     // const token = localStorage.getItem("token");
-//     try {
-//         const res = await axios.get(`${baseUrl}/user`, {
-//             headers: {
-//                 Authorization: `bearer ${token}`
-//             }
-//         });
-//         return res
-//     } catch (err) {
-//         throw err.response?.data?.message;
-//     }
-// }
+
 // change user password 
 const changePassword = async (newPassword, currentPass) => {
-    const token = localStorage.getItem("token");
     try {
-        const res = await axios.put(`${baseUrl}/update-password`, {
-            newPassword, currentPass
-        },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+        const res = await api.put("/update-password", {newPassword, currentPass});
         return res
     } catch (err) {
         throw err.response?.data?.message;
     }
 }
+
 // forgot password 
 const forgotPassword = async (email) => {
     try {
-        const res = await axios.post(`${baseUrl}/forgot-password`, {
-            email,
-            clientURL: window.location.origin,
-        })
-        return res;
-    }
-    catch (err) {
+        const res = await api.post("/forgot-password",{
+            email, clientURL: window.location.origin
+        });
+        return res
+    } catch (err) {
+        alert(err);
         throw err.response?.data?.message;
     }
 }
+
+// reset pass 
 const resetPassword = async (token, password) => {
     try {
-        const res = await axios.post(`${baseUrl}/reset-password`, {
-            token,
-            password
-        })
-        return res;
-    }
-    catch (err) {
+        const res = await api.post("/reset-password", {token, password});
+        return res
+    } catch (err) {
+        alert(err);
         throw err.response?.data?.message;
     }
 }
+
 export { login, register, fetchUsers, fetchAuthUser, forgotPassword, resetPassword, changePassword };

@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext.js";
 const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const { token, logout, user } = useContext(AuthContext);
+  const {token, userLoading, logout, user } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
@@ -54,8 +54,9 @@ const Header = () => {
         </ul>
 
         {/* Desktop Buttons */}
-        {user ? (
+        {token ? (
           <div className="hidden md:flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-2 shadow-sm transition hover:shadow-md">
+            {/* avatar */}
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,16 +73,16 @@ const Header = () => {
                 />
               </svg>
             </div>
-
-            <div className="hidden sm:block">
-              <p className="text-sm font-semibold text-gray-800">
+            {/* user details  */}
+            <div className={`${userLoading && "animate-blur-pulse"} hidden sm:block`}>
+              <p className="text-sm font-semibold text-gray-800 ">
                 {user?.fullName || "User"}
               </p>
               <p className="text-xs text-gray-500">
-                {user?.email}
+                {user?.email || "user@gmail.com"}
               </p>
             </div>
-
+            {/* logout btn  */}
             <button
               onClick={handleLogout}
               className="cursor-pointer rounded-full p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600"
