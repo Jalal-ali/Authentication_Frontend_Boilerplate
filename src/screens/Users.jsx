@@ -1,27 +1,48 @@
-import {useEffect, useState } from "react";
+// import {useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query"
 import { fetchUsers } from "../api/authApi"
+import LoadingSpinner from "../components/LoadingSpinner.jsx"
 // import AuthContext from "../context/AuthContext.js";
 
 const Users = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const {data, isLoading, error} = useQuery({
+    queryKey:["users"],
+    queryFn : async () =>{
+      const res = await fetchUsers();
+      console.log(res.data.users);
+      return res.data.users
+    },
+    retry : false,
+  });
+  // const [data, setData] = useState([]);
+  // const [error, setError] = useState(null);
     // const auth = useContext(AuthContext);
   
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        // const token = auth.token ;
-        const res = await fetchUsers();
-        setData(res.data.users);
-      } catch (err) {
-        setError(err);
-        // console.log(err);
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     try {
+  //       const res = await fetchUsers();
+  //       setData(res.data.users);
+  //     } catch (err) {
+  //       setError(err);
+  //       // console.log(err);
 
-      }
-    }
-    getUsers();
-  }, []);
+  //     }
+  //   }
+  //   getUsers();
+  // }, []);
+  if(error){
+    return (
+      <div className="flex py-4 text-center justify-center">
+          <h1>Session expired login again.</h1>
+          
+        </div>
+    )
+  }
+  if(isLoading){
+    return <LoadingSpinner />
+  }
   return (
     <>
       {error ?
@@ -52,7 +73,7 @@ const Users = () => {
     </thead>
 
     <tbody className="divide-y divide-gray-200 bg-white">
-      {data.map((value) => (
+      {data?.map((value) => (
         <tr
           key={value._id}
           className="hover:bg-indigo-50 transition-colors duration-200 even:bg-gray-50"

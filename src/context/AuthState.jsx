@@ -16,11 +16,11 @@ const AuthState = (props) => {
       try {
         setUserLoading(true);
         const res = await fetchAuthUser();
-        console.log("Fetched user:", res.data.user);
+        console.log("Fetched user:", res.data.user.fullName,"-",res.data.user.email);
         setUser(res.data.user);
       } catch (err) {
-        console.log("Error:", err);
-        alert("Your session has been expired, Login Again.");
+        console.log("Error:", err.response?.data?.message);
+        // alert("Your session has been expired, Login Again.");
         localStorage.removeItem("token");
         setToken(null);
         setUser(null);

@@ -8,7 +8,6 @@ const login = async (email, password) => {
         });
         return res
     } catch (err) {
-        // alert(err);
         throw err.response?.data?.message;
     }
 }
@@ -19,31 +18,18 @@ const register = async (email, password, role, fullName) => {
         const res = await api.post("/register", {email, password, role, fullName} );
         return res
     } catch (err) {
-        alert(err);
         throw err.response?.data?.message;
     }
 }
 
-// get all users  
+// get all users
 const fetchUsers = async () => {
-    try {
-        const res = await api.get("/users");
-        return res
-    } catch (err) {
-        alert(err);
-        throw err.response?.data?.message;
-    }
+    return api.get("/users");
 }
 
 // get authenticated user
 const fetchAuthUser = async () => {
-    try {
-        const res = await api.get("/user");
-        return res
-    } catch (err) {
-        alert(err);
-        throw err.response?.data?.message;
-    }
+    return await api.get("/user");
 }
 
 // change user password 
@@ -64,7 +50,6 @@ const forgotPassword = async (email) => {
         });
         return res
     } catch (err) {
-        alert(err);
         throw err.response?.data?.message;
     }
 }
@@ -75,7 +60,6 @@ const resetPassword = async (token, password) => {
         const res = await api.post("/reset-password", {token, password});
         return res
     } catch (err) {
-        alert(err);
         throw err.response?.data?.message;
     }
 }
