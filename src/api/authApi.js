@@ -13,7 +13,7 @@ const login = async (email, password) => {
 }
 
 // register 
-const register = async (email, password, role, fullName) => {
+const register = async ({email, password, role, fullName}) => {
     try {
         const res = await api.post("/register", {email, password, role, fullName} );
         return res

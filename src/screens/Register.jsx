@@ -2,30 +2,54 @@ import { useState } from "react";
 import { register } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Register = () => {
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
-    const [role, setRole] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [showPass, setShowPass] = useState(false);
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const [showPass, setShowPass] = useState(false);
+    const [userData, setUserData] = useState({});
+    const registerMutation = useMutation({
+        mutationFn: register,
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["users"],
+            });
+            navigate("/login");
+        },
+        onError: (error) => {
+            console.log(error);
+            alert(error);
+        },
+    })
     const signUp = async () => {
-        try {
-            if(!fullName){
-                alert("Please Enter valid Full Name !");
-                return;
-            }
-            const res = await register(email, pass, role, fullName);
-            console.log('Server response:', res.data);
-            alert(res.data.message);
-            navigate("/login")
-
-        } catch (err) {
-            alert(err);
-            console.log(err);
+        if (!userData.fullName) {
+            alert("Please Enter valid Full Name !");
+            return;
         }
+        registerMutation.mutate(userData);
+
     }
+    // const [email, setEmail] = useState("");
+    // const [pass, setPass] = useState("");
+    // const [role, setRole] = useState("");
+    // const [fullName, setFullName] = useState("");
+    // const signUp = async () => {
+    //     try {
+    //         if(!fullName){
+    //             alert("Please Enter valid Full Name !");
+    //             return;
+    //         }
+    //         const res = await register(email, pass, role, fullName);
+    //         console.log('Server response:', res.data);
+    //         alert(res.data.message);
+    //         navigate("/login")
+
+    //     } catch (err) {
+    //         alert(err);
+    //         console.log(err);
+    //     }
+    // }
     return (
         <>
             <section className="max-w-7xl min-h-screen h-full mx-auto px-4 py-6 sm:px-6 lg:px-8 bg-gray-200">
@@ -46,7 +70,11 @@ const Register = () => {
                             <label className="block text-gray-700 font-medium mb-1">Full Name</label>
                             <input
                                 onChange={(e) => {
-                                    setFullName(e.target.value.trim());
+                                    // setFullName(e.target.value.trim());
+                                    setUserData(prev => ({
+                                        ...prev,
+                                        fullName: e.target.value.trim()
+                                    }));
                                 }}
                                 type="text"
                                 required
@@ -59,7 +87,11 @@ const Register = () => {
                             <label className="block text-gray-700 font-medium mb-1">Email</label>
                             <input
                                 onChange={(e) => {
-                                    setEmail(e.target.value);
+                                    // setEmail(e.target.value);
+                                    setUserData(prev => ({
+                                        ...prev,
+                                        email: e.target.value.trim()
+                                    }));
                                 }}
                                 type="email"
                                 required
@@ -72,7 +104,11 @@ const Register = () => {
                             <label className="block text-gray-700 font-medium mb-1">Password</label>
                             <input
                                 onChange={(e) => {
-                                    setPass(e.target.value);
+                                    // setPass(e.target.value);
+                                    setUserData(prev => ({
+                                        ...prev,
+                                        password: e.target.value.trim()
+                                    }));
                                 }}
                                 type={showPass ? "text" : "password"}
                                 required
@@ -96,8 +132,14 @@ const Register = () => {
                                         type="radio"
                                         name="role"
                                         value="admin"
-                                        checked={role === "admin"}
-                                        onChange={(e) => setRole(e.target.value)}
+                                        checked={userData.role === "admin"}
+                                        onChange={(e) => {
+                                            // setRole(e.target.value)
+                                            setUserData(prev => ({
+                                                ...prev,
+                                                role: e.target.value.trim()
+                                            }));
+                                        }}
                                         required
                                     />
                                     <span className="pl-2">Admin</span>
@@ -108,8 +150,14 @@ const Register = () => {
                                         type="radio"
                                         name="role"
                                         value="user"
-                                        checked={role === "user"}
-                                        onChange={(e) => setRole(e.target.value)}
+                                        checked={userData.role === "user"}
+                                        onChange={(e) => {
+                                            // setRole(e.target.value)
+                                            setUserData(prev => ({
+                                                ...prev,
+                                                role: e.target.value.trim()
+                                            }));
+                                        }}
                                     />
                                     <span className="pl-2">User</span>
                                 </label>

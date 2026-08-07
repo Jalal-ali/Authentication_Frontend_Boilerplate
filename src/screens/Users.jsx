@@ -9,9 +9,9 @@ const Users = () => {
     queryKey:["users"],
     queryFn : async () =>{
       const res = await fetchUsers();
-      console.log(res.data.users);
       return res.data.users
     },
+    staleTime: 15 * 1000,
     retry : false,
   });
   // const [data, setData] = useState([]);
