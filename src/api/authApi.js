@@ -23,8 +23,8 @@ const register = async ({email, password, role, fullName}) => {
 }
 
 // get all users
-const fetchUsers = async () => {
-    return api.get("/users");
+const fetchUsers = async (page) => {
+    return api.get(`/users?page=${page}&limit=10`);
 }
 
 // get authenticated user

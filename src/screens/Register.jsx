@@ -22,7 +22,7 @@ const Register = () => {
             alert(error);
         },
     })
-    const signUp = async () => {
+    const signUp = () => {
         if (!userData.fullName) {
             alert("Please Enter valid Full Name !");
             return;
