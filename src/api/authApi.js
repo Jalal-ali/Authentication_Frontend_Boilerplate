@@ -1,12 +1,12 @@
 import { api } from "./axiosInstance";
 
 // login 
-const login = async (email, password) => {
+const login = async ({email, password}) => {
     try {
         const res = await api.post("/login", {
             email, password
         });
-        return res
+        return res.data
     } catch (err) {
         throw err.response?.data?.message;
     }
@@ -63,5 +63,13 @@ const resetPassword = async (token, password) => {
         throw err.response?.data?.message;
     }
 }
-
-export { login, register, fetchUsers, fetchAuthUser, forgotPassword, resetPassword, changePassword };
+const deleteUser = async ({id}) => {
+    try {
+        const res = await api.delete(`/delete/${id}`)
+        return res.data
+    } catch (err) {
+        throw err.response?.data?.message;
+    }
+}
+export { login, register, fetchUsers, fetchAuthUser, forgotPassword,
+     resetPassword, changePassword, deleteUser};

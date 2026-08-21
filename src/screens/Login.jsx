@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ForgotPassModal from "../components/ForgotPassModal";
 import { Eye, EyeOff } from "lucide-react";
 import AuthContext from "../context/AuthContext.js";
+import { useMutation} from "@tanstack/react-query";
 
 
 const Login = () => {
@@ -14,21 +15,41 @@ const Login = () => {
     const [showForgotModal, setShowForgotModal] = useState(false);
     const auth = useContext(AuthContext);
 
-    const signIn = async () => {
-        try {
-            const res = await login(email, pass);
-            console.log('Server response:', res.data.message);
-            // console.log('Token:', res.data.token);
-            // localStorage.setItem("token", res.data.token);
-            auth.login(res.data.token);
-            alert(res.data.message);
+    // const queryClient = useQueryClient()
+    const loginMutation = useMutation({
+        mutationFn: login,
+        onSuccess : (data) => { 
+            auth.login(data.token);
+            alert(data.message)
             navigate("/users")
-
-        } catch (err) {
-            alert(err);
+        },
+        onError : (err) => {
             console.log(err);
+            alert(err)
         }
+    })
+    const handleLogin = () => {
+        if (!email) {
+            alert("Please Enter valid Full Name !");
+            return;
+        }
+        loginMutation.mutate({email, password: pass})
     }
+    // const signIn = async () => {
+    //     try {
+    //         const res = await login(email, pass);
+    //         console.log('Server response:', res.data.message);
+    //         // console.log('Token:', res.data.token);
+    //         // localStorage.setItem("token", res.data.token);
+    //         auth.login(res.data.token);
+    //         alert(res.data.message);
+    //         navigate("/users")
+
+    //     } catch (err) {
+    //         alert(err);
+    //         console.log(err);
+    //     }
+    // }
 
     return (
         <>
@@ -50,7 +71,7 @@ const Login = () => {
                     <form className="mt-6 space-y-4"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            signIn();
+                            handleLogin();
                         }}>
                         {/* Email */}
                         <div>
